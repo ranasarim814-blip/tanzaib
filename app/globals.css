@@ -1,26 +1,345 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 :root {
+  --ivory: #f7f3ec;
+  --parchment: #efe7da;
+  --ink: #1c1a17;
+  --ink-soft: #2a2622;
+  --taupe: #6f655a; /* darkened from #8A7F72 for AA contrast on ivory */
+  --taupe-light: #8a7f72;
+  --brass: #b08d57;
+  --brass-deep: #84652f; /* text-safe brass (AA on ivory) */
+  --brass-soft: #d9c4a0;
+  --maroon: #4a1f24;
+  --line: rgba(28, 26, 23, 0.12);
+  --line-light: rgba(247, 243, 236, 0.16);
+
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* shadcn-style tokens for the admin */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: var(--ink);
+  --muted: #f4f1ec;
+  --muted-foreground: #6f655a;
+  --border: #e7e1d7;
+  --ring: var(--brass);
+  --primary: var(--ink);
+  --primary-foreground: var(--ivory);
+  --destructive: #a1312b;
 }
 
 @theme inline {
+  --color-ivory: var(--ivory);
+  --color-parchment: var(--parchment);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-taupe: var(--taupe);
+  --color-taupe-light: var(--taupe-light);
+  --color-brass: var(--brass);
+  --color-brass-deep: var(--brass-deep);
+  --color-brass-soft: var(--brass-soft);
+  --color-maroon: var(--maroon);
+  --color-line: var(--line);
+  --color-line-light: var(--line-light);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-destructive: var(--destructive);
+
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-manrope), "Manrope", system-ui, sans-serif;
+  --font-urdu: var(--font-nastaliq), "Noto Nastaliq Urdu", serif;
+
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+  --breakpoint-3xl: 1440px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--ivory);
+    color: var(--ink);
+    font-family: var(--font-sans);
+  }
+  ::selection {
+    background: var(--brass-soft);
+    color: var(--ink);
+  }
+  :focus-visible {
+    outline: 1px solid var(--brass);
+    outline-offset: 3px;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .container-luxe {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) {
+    .container-luxe {
+      padding-inline: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container-luxe {
+      padding-inline: 3.5rem;
+    }
+  }
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .display {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+  }
+  .urdu {
+    font-family: var(--font-urdu);
+    direction: rtl;
+    line-height: 2;
+  }
+  .hairline {
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* Buttons — rectangular, thin border, uppercase small text, fill sweep on hover */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0 1.75rem;
+    border: 1px solid currentColor;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    overflow: hidden;
+    isolation: isolate;
+    transition: color 0.5s var(--ease-luxe), border-color 0.5s var(--ease-luxe);
+  }
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.6s var(--ease-luxe);
+  }
+  .btn:hover::before,
+  .btn:focus-visible::before {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  .btn:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .btn-ink {
+    background: var(--ink);
+    color: var(--ivory);
+    border-color: var(--ink);
+  }
+  .btn-ink::before {
+    background: var(--brass-deep);
+  }
+  .btn-ink:hover {
+    border-color: var(--brass-deep);
+  }
+  .btn-outline {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .btn-outline::before {
+    background: var(--ink);
+  }
+  .btn-outline:hover,
+  .btn-outline:focus-visible {
+    color: var(--ivory);
+  }
+  .btn-light {
+    color: var(--ivory);
+    border-color: rgba(247, 243, 236, 0.5);
+  }
+  .btn-light::before {
+    background: var(--ivory);
+  }
+  .btn-light:hover,
+  .btn-light:focus-visible {
+    color: var(--ink);
+    border-color: var(--ivory);
+  }
+
+  .link-underline {
+    background-image: linear-gradient(var(--brass), var(--brass));
+    background-size: 0% 1px;
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.5s var(--ease-luxe);
+    padding-bottom: 2px;
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible,
+  .link-underline[aria-current="page"] {
+    background-size: 100% 1px;
+    background-position: 0% 100%;
+  }
+
+  .field {
+    width: 100%;
+    min-height: 3rem;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 0.75rem 0;
+    font-size: 0.9375rem;
+    color: var(--ink);
+    transition: border-color 0.3s var(--ease-luxe);
+    border-radius: 0;
+  }
+  .field:focus {
+    outline: none;
+    border-bottom-color: var(--brass);
+  }
+  .field::placeholder {
+    color: var(--taupe-light);
+  }
+  .field[aria-invalid="true"] {
+    border-bottom-color: var(--maroon);
+  }
+  .field-label {
+    display: block;
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    font-weight: 500;
+  }
+  .field-error {
+    margin-top: 0.35rem;
+    font-size: 0.75rem;
+    color: var(--maroon);
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.animate-marquee {
+  animation: marquee 48s linear infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--parchment);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  animation: shimmer 1.8s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+}
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
 }

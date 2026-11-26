@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#1C1A17"/>
+  <path d="M420 630 L420 260 C420 140 500 70 600 70 C700 70 780 140 780 260 L780 630" fill="none" stroke="#B08D57" stroke-opacity="0.5"/>
+  <text x="600" y="330" text-anchor="middle" font-family="Georgia, serif" font-size="84" letter-spacing="22" fill="#F7F3EC">TANZAIB</text>
+  <text x="600" y="400" text-anchor="middle" font-family="Georgia, serif" font-size="22" letter-spacing="8" fill="#D9C4A0">HAND-EMBROIDERED HEIRLOOMS</text>
+</svg>
