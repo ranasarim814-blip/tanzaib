@@ -3,21 +3,21 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { Heart, Menu, ShoppingBag, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { PRIMARY_NAV, SECONDARY_NAV } from "./nav";
 import { cartCount, useCart } from "@/lib/store/cart";
 import { useWishlist } from "@/lib/store/wishlist";
 import { useUi } from "@/lib/store/ui";
-import { useHydrated } from "@/lib/hooks";
+import { useHydrated, useReducedMotionSafe } from "@/lib/hooks";
 import { t } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 export function Header() {
   const pathname = usePathname();
   const hydrated = useHydrated();
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const lines = useCart((s) => s.lines);
   const wish = useWishlist((s) => s.slugs.length);
   const { openBag, menuOpen, setMenu, bagBump } = useUi();

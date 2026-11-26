@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { Counter } from "@/components/motion/Counter";
 import { t } from "@/lib/i18n";
-import { useMediaQuery } from "@/lib/hooks";
+import { useMediaQuery, useReducedMotionSafe } from "@/lib/hooks";
 
 const ART = [
   // Design: a sketch of a paisley on paper
@@ -19,7 +19,7 @@ const ART = [
 
 export function CraftStory({ hours }: { hours: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const desktop = useMediaQuery("(min-width: 1024px)", true);
   const horizontal = desktop && !reduce;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });

@@ -28,7 +28,7 @@ export default async function DashboardPage() {
                 <p className="text-xs font-medium text-muted-foreground">{t.label}</p>
                 <t.icon className={t.alert ? "size-4 text-[#b7791f]" : "size-4 text-muted-foreground"} strokeWidth={1.6} />
               </div>
-              <p className="mt-3 font-serif text-3xl tabular-nums">{t.value}</p>
+              <p className="mt-3 text-2xl font-semibold tabular-nums">{t.value}</p>
               {t.sub && <p className="mt-1 text-xs text-muted-foreground">{t.sub}</p>}
             </Card>
           </Link>

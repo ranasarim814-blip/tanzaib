@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useReducedMotionSafe } from "@/lib/hooks";
+import { motion } from "motion/react";
 import type { ReactNode } from "react";
 
 export function Reveal({
@@ -16,7 +17,7 @@ export function Reveal({
   className?: string;
   as?: "div" | "section" | "li" | "article";
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const Comp = motion[as];
   if (reduce) return <Comp className={className}>{children}</Comp>;
   return (

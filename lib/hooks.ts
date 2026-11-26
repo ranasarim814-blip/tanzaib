@@ -22,3 +22,10 @@ export function useMediaQuery(query: string, fallback = false) {
     () => fallback,
   );
 }
+
+/** prefers-reduced-motion that is `false` during SSR/hydration (avoids hydration mismatches). */
+export function useReducedMotionSafe() {
+  const hydrated = useHydrated();
+  const reduce = useMediaQuery("(prefers-reduced-motion: reduce)", false);
+  return hydrated && reduce;
+}

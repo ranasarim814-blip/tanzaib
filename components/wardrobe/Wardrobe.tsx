@@ -7,7 +7,6 @@ import {
   AnimatePresence,
   motion,
   useInView,
-  useReducedMotion,
   useScroll,
   useTransform,
 } from "motion/react";
@@ -16,7 +15,7 @@ import { PriceTag } from "@/components/store/PriceTag";
 import { getEffectivePrice } from "@/lib/pricing";
 import type { ProductSummary } from "@/lib/types";
 import { cn, formatPKR } from "@/lib/utils";
-import { useMediaQuery } from "@/lib/hooks";
+import { useMediaQuery, useReducedMotionSafe } from "@/lib/hooks";
 import { useNow } from "@/lib/now";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -38,7 +37,7 @@ export const productImageLayoutId = (slug: string) => `product-image-${slug}`;
  */
 export function Wardrobe({ products, eyebrow, title, subtitle }: WardrobeProps) {
   const router = useRouter();
-  const reduce = useReducedMotion() ?? false;
+  const reduce = useReducedMotionSafe() ?? false;
   const isDesktop = useMediaQuery("(min-width: 1024px)", true);
   const sectionRef = useRef<HTMLElement>(null);
   const railRef = useRef<HTMLDivElement>(null);

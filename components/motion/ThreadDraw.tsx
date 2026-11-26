@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useReducedMotionSafe } from "@/lib/hooks";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -8,7 +9,7 @@ import { cn } from "@/lib/utils";
  * Used as a section divider.
  */
 export function ThreadDivider({ className, tone = "brass" }: { className?: string; tone?: "brass" | "soft" }) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const stroke = tone === "brass" ? "var(--brass)" : "var(--brass-soft)";
   const draw = (delay: number, duration = 2.2) =>
     reduce

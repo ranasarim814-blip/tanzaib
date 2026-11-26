@@ -6,7 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test --trace off",
+    "format": "prettier --write .",
+    "art": "tsx scripts/generate-dummy-art.ts",
+    "seed:sql": "tsx scripts/generate-seed.ts",
+    "seed:storage": "tsx scripts/seed-storage.ts",
+    "create-admin": "tsx scripts/create-admin.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^7.0.9",

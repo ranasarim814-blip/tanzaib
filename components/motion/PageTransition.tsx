@@ -1,13 +1,14 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useReducedMotionSafe } from "@/lib/hooks";
+import { motion } from "motion/react";
 
 /**
  * Rendered from app/(store)/template.tsx, which remounts on every navigation:
  * a thin brass line sweeps across the top and the page fades in.
  */
 export function PageTransition({ children }: { children: React.ReactNode }) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   return (
     <>
       {!reduce && (

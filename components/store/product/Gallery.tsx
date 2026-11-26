@@ -1,7 +1,8 @@
 "use client";
 
+import { useReducedMotionSafe } from "@/lib/hooks";
 import { useRef, useState, type PointerEvent as RPointerEvent } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { Dialog } from "radix-ui";
 import { Maximize2, X } from "lucide-react";
 import { ProductImage } from "@/components/store/ProductImage";
@@ -12,7 +13,7 @@ import { cn } from "@/lib/utils";
 type View = "front" | "back" | "detail";
 
 export function Gallery({ slug, name, images }: { slug: string; name: string; images: PImage[] }) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const visible = images.filter((i) => i.kind !== "hanger");
   const front = visible.find((i) => i.kind === "front") ?? visible[0];
   const back = visible.find((i) => i.kind === "back");

@@ -1,13 +1,14 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useReducedMotionSafe } from "@/lib/hooks";
+import { motion } from "motion/react";
 import { useEffect } from "react";
 import { trackPurchase } from "@/lib/analytics";
 import { t } from "@/lib/i18n";
 
 /** A gift box whose lid lifts, and a "Shukriya" card rises out of it. */
 export function GiftBox({ name, orderNumber }: { name: string; orderNumber: string }) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const ease = [0.22, 1, 0.36, 1] as const;
 
   useEffect(() => {
