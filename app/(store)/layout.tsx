@@ -6,7 +6,6 @@ import { CartDrawer } from "@/components/store/CartDrawer";
 import { FlyToBag } from "@/components/store/FlyToBag";
 import { WhatsAppFloat } from "@/components/store/WhatsAppFloat";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
-import { PageTransition } from "@/components/motion/PageTransition";
 import { Cursor } from "@/components/motion/Cursor";
 import { getRenderTime, getSettings } from "@/lib/data/catalog";
 import { NowProvider } from "@/lib/now";
@@ -23,13 +22,15 @@ export default async function StoreLayout({ children }: LayoutProps<"/">) {
         <Header />
       </Suspense>
       <main id="main" className="flex-1">
-        <PageTransition>{children}</PageTransition>
+        {children}
       </main>
       <Footer />
       <CartDrawer rules={{ delivery_charge: settings.delivery_charge, free_delivery_threshold: settings.free_delivery_threshold }} />
       <FlyToBag />
       <WhatsAppFloat />
-      <SmoothScroll />
+      <Suspense fallback={null}>
+        <SmoothScroll />
+      </Suspense>
       <Cursor />
     </NowProvider>
   );
