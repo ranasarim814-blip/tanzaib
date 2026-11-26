@@ -40,7 +40,8 @@ export function useNow(): Date {
   const ms = useSyncExternalStore(
     subscribe,
     () => clientNow || (clientNow = Date.now()),
-    () => (serverIso ? Date.parse(serverIso) : 0),
+    // Outside a NowProvider (admin, dynamic pages) fall back to the server clock.
+    () => (serverIso ? Date.parse(serverIso) : Date.now()),
   );
   return new Date(ms);
 }
